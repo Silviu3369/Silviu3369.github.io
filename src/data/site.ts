@@ -8,7 +8,7 @@ export const site = {
 	email: 'ghimpausilviu@gmail.com',
 	github: 'https://github.com/Silviu3369',
 	githubHandle: 'Silviu3369',
-	linkedin: 'https://www.linkedin.com/in/silviu-ghimpau/?locale=en',
+	linkedin: 'https://be.linkedin.com/in/silviu-ghimpau/en',
 	linkedinHandle: 'silviu-ghimpau',
 };
 
