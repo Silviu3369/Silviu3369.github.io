@@ -1,6 +1,6 @@
 # Ionel Silviu Ghimpau
 
-Source for the personal site at `silviu3369.github.io`.
+Source for the personal site at `ghimpau.eu`.
 
 The site presents open-source Windows tools, documented Cisco network architectures, infrastructure automation, and research projects. It is a static Astro build deployed through GitHub Pages.
 

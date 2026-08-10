@@ -4,7 +4,7 @@ export const site = {
 	tagline: 'Open-source software & systems engineering',
 	description:
 		'Personal site of Ionel Silviu Ghimpau, with open-source Windows tools, network projects, and infrastructure automation.',
-	url: 'https://silviu3369.github.io',
+	url: 'https://ghimpau.eu',
 	email: 'ghimpausilviu@gmail.com',
 	github: 'https://github.com/Silviu3369',
 	githubHandle: 'Silviu3369',

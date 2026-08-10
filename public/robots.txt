@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://silviu3369.github.io/sitemap.xml
+Sitemap: https://ghimpau.eu/sitemap.xml

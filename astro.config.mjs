@@ -2,7 +2,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-	site: 'https://silviu3369.github.io',
+	site: 'https://ghimpau.eu',
 	output: 'static',
 	trailingSlash: 'never',
 	redirects: {
