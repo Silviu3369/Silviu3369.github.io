@@ -1,0 +1,240 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { engineeringProjects, labProjects, products, site } from '../data/site';
+
+const groups = [
+	{
+		label: 'Products',
+		items: products.map((p) => ({ name: p.name, description: p.description, url: p.repository, meta: `v${p.version}` })),
+	},
+	{
+		label: 'Engineering',
+		items: engineeringProjects.map((p) => ({ name: p.name, description: p.description, url: p.repository, meta: p.category })),
+	},
+	{
+		label: 'Research',
+		items: labProjects.map((p) => ({ name: p.name, description: p.description, url: p.url, meta: p.type })),
+	},
+];
+---
+
+<BaseLayout
+	title="Open Source"
+	description="Every public product and architecture includes its source, documentation, and project history."
+>
+	<section class="page-hero">
+		<div class="shell page-hero-inner" data-reveal>
+			<p class="eyebrow">Open Source</p>
+			<h1 class="display-1">I share the code, not just the result.</h1>
+			<p class="lead">
+				I publish the code because a screenshot only shows the surface. The repository shows how a project works, how it changed, and where its current limits are.
+			</p>
+			<div class="meta-row">
+				<span class="chip">Source</span>
+				<span class="chip">Documentation</span>
+				<span class="chip">Releases</span>
+				<span class="chip">Issues</span>
+			</div>
+		</div>
+	</section>
+
+	<section class="section-tight">
+		<div class="shell why-grid">
+			<div class="card why-card" data-reveal>
+				<span class="why-icon" aria-hidden="true">⌕</span>
+				<strong>Read the code</strong>
+				<p>You can look past the interface and see how each result is produced.</p>
+			</div>
+			<div class="card why-card" data-reveal style="--reveal-delay:.08s">
+				<span class="why-icon" aria-hidden="true">↺</span>
+				<strong>Follow the changes</strong>
+				<p>Commits, releases, and issues show what changed and what I am still working on.</p>
+			</div>
+			<div class="card why-card" data-reveal style="--reveal-delay:.16s">
+				<span class="why-icon" aria-hidden="true">⇲</span>
+				<strong>Try it and reuse it</strong>
+				<p>The tools and architecture notes are there to download, study, adapt, and improve.</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="section-tight">
+		<div class="shell repo-catalog">
+			{groups.map((group) => (
+				<div class="repo-group" data-reveal>
+					<div class="repo-group-head">
+						<p class="eyebrow">{group.label}</p>
+						<span class="chip">{String(group.items.length).padStart(2, '0')} repositories</span>
+					</div>
+					<ul>
+						{group.items.map((item) => (
+							<li>
+								<a href={item.url} target="_blank" rel="noreferrer">
+									<div>
+										<strong>{item.name}</strong>
+										<p>{item.description}</p>
+									</div>
+									<span class="repo-meta">{item.meta}</span>
+									<span class="repo-arr" aria-hidden="true">↗</span>
+								</a>
+							</li>
+						))}
+					</ul>
+				</div>
+			))}
+		</div>
+	</section>
+
+	<section class="section-tight">
+		<div class="shell">
+			<div class="g-panel gh-panel" data-reveal>
+				<p class="eyebrow">GitHub</p>
+				<h2 class="display-2">You can find all of it on GitHub.</h2>
+				<a class="btn btn-primary" href={site.github} target="_blank" rel="noreferrer">
+					Visit my GitHub <span class="arr arr-ext" aria-hidden="true">↗</span>
+				</a>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.why-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.2rem;
+	}
+
+	.why-card {
+		display: grid;
+		gap: 0.55rem;
+		padding: 1.7rem;
+		align-content: start;
+		justify-items: start;
+	}
+
+	.why-icon {
+		display: grid;
+		place-items: center;
+		width: 44px;
+		height: 44px;
+		border-radius: 14px;
+		background: var(--surface);
+		border: 1px solid var(--line);
+		color: var(--text-soft);
+		font-size: 1.2rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.why-card strong {
+		font-family: var(--font-display);
+		font-size: 1.1rem;
+	}
+
+	.why-card p {
+		font-size: 0.92rem;
+		color: var(--text-soft);
+	}
+
+	.repo-catalog {
+		display: grid;
+		gap: clamp(2.4rem, 5vw, 3.6rem);
+	}
+
+	.repo-group-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 1.1rem;
+	}
+
+	.repo-group ul {
+		display: grid;
+		border: 1px solid var(--line);
+		border-radius: var(--r-lg);
+		overflow: hidden;
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
+	}
+
+	.repo-group li + li {
+		border-top: 1px solid var(--line);
+	}
+
+	.repo-group li a {
+		display: flex;
+		align-items: center;
+		gap: 1.4rem;
+		padding: 1.2rem 1.5rem;
+		transition: background-color 0.2s var(--ease);
+	}
+
+	.repo-group li a:hover {
+		background: var(--surface);
+	}
+
+	.repo-group li a > div {
+		flex: 1;
+		display: grid;
+		gap: 0.2rem;
+		min-width: 0;
+	}
+
+	.repo-group strong {
+		font-family: var(--font-display);
+		font-size: 1.02rem;
+	}
+
+	.repo-group li p {
+		font-size: 0.88rem;
+		color: var(--text-soft);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.repo-meta {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.06em;
+		color: var(--text-faint);
+		white-space: nowrap;
+	}
+
+	.repo-arr {
+		color: var(--text-faint);
+		transition: transform 0.25s var(--ease), color 0.25s var(--ease);
+	}
+
+	.repo-group li a:hover .repo-arr {
+		transform: translate(2px, -2px);
+		color: var(--text);
+	}
+
+	.gh-panel {
+		display: grid;
+		gap: 1.2rem;
+		justify-items: center;
+		text-align: center;
+		padding: clamp(2.6rem, 6vw, 4rem) clamp(1.5rem, 5vw, 4rem);
+	}
+
+	.gh-panel .btn {
+		position: relative;
+		z-index: 1;
+	}
+
+	@media (max-width: 860px) {
+		.why-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.repo-group li p {
+			white-space: normal;
+		}
+
+		.repo-meta {
+			display: none;
+		}
+	}
+</style>

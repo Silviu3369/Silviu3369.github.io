@@ -1,0 +1,299 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { products, type Product } from '../../data/site';
+
+export function getStaticPaths() {
+	return products.map((product) => ({ params: { slug: product.slug }, props: { product } }));
+}
+
+interface Props {
+	product: Product;
+}
+const { product } = Astro.props;
+---
+
+<BaseLayout title={product.name} description={product.description}>
+	<section class="page-hero" style={`--accent:${product.accent}`}>
+		<div class="shell">
+			<a class="back-link" href="/products"><span class="arr" aria-hidden="true">←</span> Back to products</a>
+
+			<div class="detail-hero">
+				<div class="detail-copy" data-reveal>
+					<p class="p-kicker">{product.kicker}</p>
+					<h1 class="display-1">{product.name}</h1>
+					<p class="lead">{product.longDescription}</p>
+					<div class="meta-row">
+						<span class="chip chip-dot" style="--accent:#4ade80">v{product.version} · {product.status}</span>
+						<span class="chip">{product.platform}</span>
+						<span class="chip">Released {product.releaseDate}</span>
+						<span class="chip">Free · Open source</span>
+					</div>
+					<div class="detail-actions">
+						<a class="btn btn-primary" href={product.download} target="_blank" rel="noreferrer">
+							Get the latest release <span class="arr arr-ext" aria-hidden="true">↗</span>
+						</a>
+						<a class="btn btn-ghost" href={product.repository} target="_blank" rel="noreferrer">
+							View the source <span class="arr arr-ext" aria-hidden="true">↗</span>
+						</a>
+					</div>
+				</div>
+
+				<div class="detail-visual card" data-reveal style="--reveal-delay:.12s" aria-hidden="true">
+					<div class="visual-head">
+						<span class="chip">{product.slug}</span>
+						<span class="chip chip-dot" style="--accent:#4ade80">stable</span>
+					</div>
+					<div class="visual-stage">
+						<div class="logo-glow"></div>
+						<img src={product.logo} alt="" width="132" height="132" loading="eager" />
+					</div>
+					<div class="visual-foot">
+						<strong>{product.name}</strong>
+						<span>{product.platform}</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section-tight" style={`--accent:${product.accent}`}>
+		<div class="shell">
+			<div class="section-head" data-reveal>
+				<p class="eyebrow">Capabilities</p>
+				<h2 class="display-2">What I use {product.name} for.</h2>
+			</div>
+			<div class="feat-grid">
+				{product.features.map((feature, index) => (
+					<div class="card feat-card" data-reveal style={`--reveal-delay:${(index % 2) * 0.08}s`}>
+						<span class="feat-num">0{index + 1}</span>
+						<p>{feature}</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="section-tight" style={`--accent:${product.accent}`}>
+		<div class="shell">
+			<div class="section-head" data-reveal>
+				<p class="eyebrow">Design choices</p>
+				<h2 class="display-2">The thinking behind the tool.</h2>
+			</div>
+			<div class="principle-grid">
+				{product.principles.map((principle, index) => (
+					<div class="card principle-card" data-reveal style={`--reveal-delay:${index * 0.08}s`}>
+						<strong>{principle.title}</strong>
+						<p>{principle.text}</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="section-tight">
+		<div class="shell">
+			<div class="g-panel get-panel" data-reveal>
+				<p class="eyebrow">Get {product.name}</p>
+				<h2 class="display-2">Try it, read the code, or report an issue.</h2>
+				<p class="lead">The latest release, documentation, and open issues are all in the repository.</p>
+				<div class="get-actions">
+					<a class="btn btn-primary" href={product.download} target="_blank" rel="noreferrer">
+						Get version {product.version} <span class="arr arr-ext" aria-hidden="true">↗</span>
+					</a>
+					<a class="btn btn-ghost" href={product.repository} target="_blank" rel="noreferrer">
+						View repository <span class="arr arr-ext" aria-hidden="true">↗</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.detail-hero {
+		display: grid;
+		grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+		gap: clamp(2.25rem, 5vw, 4rem);
+		align-items: center;
+		margin-top: 2rem;
+	}
+
+	.detail-copy {
+		display: grid;
+		gap: 1.05rem;
+		justify-items: start;
+	}
+
+	.p-kicker {
+		font-family: var(--font-mono);
+		font-size: 0.76rem;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--text-faint);
+	}
+
+	.meta-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+	}
+
+	.detail-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.9rem;
+		margin-top: 0.4rem;
+	}
+
+	.detail-visual {
+		display: grid;
+		grid-template-rows: auto 1fr auto;
+		gap: 1rem;
+		padding: 1.3rem;
+		min-height: 310px;
+		background:
+			radial-gradient(26rem 16rem at 50% 0%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 65%),
+			linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+	}
+
+	.visual-head,
+	.visual-foot {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.8rem;
+	}
+
+	.visual-stage {
+		position: relative;
+		display: grid;
+		place-items: center;
+	}
+
+	.logo-glow {
+		position: absolute;
+		width: 200px;
+		height: 200px;
+		border-radius: 50%;
+		background: radial-gradient(circle, color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%);
+		filter: blur(8px);
+	}
+
+	.visual-stage img {
+		position: relative;
+		filter: drop-shadow(0 20px 34px rgba(0, 0, 0, 0.6));
+	}
+
+	.visual-foot strong {
+		font-family: var(--font-display);
+		font-size: 1.05rem;
+	}
+
+	.visual-foot span {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		color: var(--text-faint);
+	}
+
+	.feat-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1.2rem;
+	}
+
+	.feat-card {
+		display: flex;
+		gap: 1.1rem;
+		align-items: flex-start;
+		padding: 1.5rem 1.6rem;
+	}
+
+	.feat-num {
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		font-weight: 500;
+		color: var(--text-faint);
+		border: 1px solid var(--line-strong);
+		background: var(--surface);
+		border-radius: 10px;
+		padding: 0.35rem 0.6rem;
+		flex-shrink: 0;
+	}
+
+	.feat-card p {
+		color: var(--text-soft);
+		font-size: 0.96rem;
+		padding-top: 0.2rem;
+	}
+
+	.principle-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.2rem;
+	}
+
+	.principle-card {
+		display: grid;
+		gap: 0.6rem;
+		padding: 1.6rem;
+		align-content: start;
+	}
+
+	.principle-card strong {
+		font-family: var(--font-display);
+		font-size: 1.08rem;
+	}
+
+	.principle-card strong::before {
+		content: '';
+		display: block;
+		width: 26px;
+		height: 3px;
+		border-radius: 3px;
+		background: linear-gradient(90deg, var(--text-faint), transparent);
+		margin-bottom: 0.8rem;
+	}
+
+	.principle-card p {
+		font-size: 0.92rem;
+		color: var(--text-soft);
+	}
+
+	.get-panel {
+		display: grid;
+		gap: 1.1rem;
+		justify-items: center;
+		text-align: center;
+		padding: clamp(2.6rem, 6vw, 4rem) clamp(1.5rem, 5vw, 4rem);
+	}
+
+	.get-panel .lead {
+		max-width: 44ch;
+	}
+
+	.get-actions {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.9rem;
+		margin-top: 0.5rem;
+		position: relative;
+		z-index: 1;
+	}
+
+	@media (max-width: 900px) {
+		.detail-hero {
+			grid-template-columns: 1fr;
+		}
+
+		.detail-visual {
+			max-width: 480px;
+			min-height: 300px;
+		}
+
+		.feat-grid,
+		.principle-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

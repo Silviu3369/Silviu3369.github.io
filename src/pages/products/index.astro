@@ -1,0 +1,288 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { products } from '../../data/site';
+---
+
+<BaseLayout
+	title="Products"
+	description="Open-source Windows tools for diagnostics, network support, and printer operations — built by Ionel Silviu Ghimpau."
+>
+	<section class="page-hero">
+		<div class="shell page-hero-inner" data-reveal>
+			<p class="eyebrow">Products</p>
+			<h1 class="display-1">Small tools for real support work.</h1>
+			<p class="lead">
+				I build each application around a problem I have wanted to solve more clearly. The scope stays focused, the results are explained, and the source remains public.
+			</p>
+			<div class="meta-row">
+				<span class="chip">Windows 10 / 11</span>
+				<span class="chip">Public source</span>
+				<span class="chip">Portable releases</span>
+			</div>
+		</div>
+	</section>
+
+	<section class="section-tight">
+		<div class="shell product-list">
+			{products.map((product, index) => (
+				<article class="card presentation" style={`--accent:${product.accent}`} data-reveal>
+					<div class="presentation-visual" aria-hidden="true">
+						<div class="visual-head">
+							<span class="chip">ISG / 0{index + 1}</span>
+							<span class="chip chip-dot">v{product.version} · {product.status}</span>
+						</div>
+						<div class="visual-stage">
+							<div class="logo-glow"></div>
+							<img src={product.logo} alt="" width="120" height="120" loading="lazy" />
+						</div>
+						<div class="visual-foot">
+							<strong>{product.name}</strong>
+							<span>{product.platform}</span>
+						</div>
+					</div>
+
+					<div class="presentation-copy">
+						<p class="p-kicker">{product.kicker}</p>
+						<h2>{product.name}</h2>
+						<p class="p-desc">{product.longDescription}</p>
+						<ul class="check-feats">
+							{product.features.slice(0, 3).map((feature) => <li>{feature}</li>)}
+						</ul>
+						<div class="presentation-actions">
+							<a class="btn btn-primary btn-sm" href={`/products/${product.slug}`}>
+								See how it works <span class="arr" aria-hidden="true">→</span>
+							</a>
+							<a class="btn btn-ghost btn-sm" href={product.download} target="_blank" rel="noreferrer">
+								Get the latest release <span class="arr arr-ext" aria-hidden="true">↗</span>
+							</a>
+							<a class="text-link" href={product.repository} target="_blank" rel="noreferrer">
+								View source <span class="arr" aria-hidden="true">↗</span>
+							</a>
+						</div>
+					</div>
+				</article>
+			))}
+		</div>
+	</section>
+
+	<section class="section-tight">
+		<div class="shell">
+			<div class="g-panel standard-panel" data-reveal>
+				<div>
+					<p class="eyebrow">How I work</p>
+					<h2 class="display-2">A useful tool should do one job well.</h2>
+				</div>
+				<div class="standard-list">
+					<div><span>01</span><strong>One clear job</strong><p>I keep the scope close to a real technician workflow.</p></div>
+					<div><span>02</span><strong>Results you can read</strong><p>The application shows what it checked and why the result matters.</p></div>
+					<div><span>03</span><strong>Nothing hidden</strong><p>The source, releases, current status, and limitations stay public.</p></div>
+				</div>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.product-list {
+		display: grid;
+		gap: 1.6rem;
+	}
+
+	.presentation {
+		display: grid;
+		grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+		gap: clamp(1.5rem, 4vw, 3rem);
+		padding: clamp(1.4rem, 3vw, 2rem);
+		overflow: hidden;
+	}
+
+	.presentation::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: radial-gradient(34rem 18rem at 0% 0%, color-mix(in srgb, var(--accent) 5%, transparent), transparent 62%);
+		pointer-events: none;
+	}
+
+	.presentation-visual {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		grid-template-rows: auto 1fr auto;
+		gap: 1rem;
+		border-radius: var(--r-md);
+		border: 1px solid var(--line-strong);
+		background: rgba(255, 255, 255, 0.02);
+		padding: 1.2rem;
+		min-height: 320px;
+	}
+
+	.visual-head,
+	.visual-foot {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.8rem;
+	}
+
+	.visual-stage {
+		position: relative;
+		display: grid;
+		place-items: center;
+	}
+
+	.logo-glow {
+		position: absolute;
+		width: 180px;
+		height: 180px;
+		border-radius: 50%;
+		background: radial-gradient(circle, color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%);
+		filter: blur(6px);
+	}
+
+	.visual-stage img {
+		position: relative;
+		filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.55));
+	}
+
+	.visual-foot strong {
+		font-family: var(--font-display);
+		font-size: 1.05rem;
+	}
+
+	.visual-foot span {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		color: var(--text-faint);
+	}
+
+	.presentation-copy {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		gap: 0.9rem;
+		align-content: center;
+		justify-items: start;
+	}
+
+	.p-kicker {
+		font-family: var(--font-mono);
+		font-size: 0.74rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--text-faint);
+	}
+
+	.presentation-copy h2 {
+		font-size: clamp(1.5rem, 2.4vw, 1.85rem);
+	}
+
+	.p-desc {
+		color: var(--text-soft);
+		font-size: 0.98rem;
+		max-width: 56ch;
+	}
+
+	.check-feats {
+		display: grid;
+		gap: 0.5rem;
+		margin-block: 0.2rem;
+	}
+
+	.check-feats li {
+		position: relative;
+		padding-left: 1.7rem;
+		font-size: 0.92rem;
+		color: var(--text-soft);
+	}
+
+	.check-feats li::before {
+		content: '✓';
+		position: absolute;
+		left: 0;
+		top: 0;
+		display: grid;
+		place-items: center;
+		width: 18px;
+		height: 18px;
+		margin-top: 0.2em;
+		border-radius: 6px;
+		background: var(--surface);
+		border: 1px solid var(--line-strong);
+		color: var(--text-soft);
+		font-size: 0.66rem;
+		line-height: 1;
+	}
+
+	.presentation-actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.8rem;
+		margin-top: 0.5rem;
+	}
+
+	/* Standard panel */
+	.standard-panel {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+		gap: clamp(2rem, 5vw, 4rem);
+		padding: clamp(2.2rem, 5vw, 3.5rem);
+		align-items: center;
+	}
+
+	.standard-panel .eyebrow {
+		margin-bottom: 0.9rem;
+	}
+
+	.standard-list {
+		display: grid;
+		gap: 1.1rem;
+		position: relative;
+		z-index: 1;
+	}
+
+	.standard-list div {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		grid-template-rows: auto auto;
+		column-gap: 1rem;
+		row-gap: 0.2rem;
+		padding: 1rem 1.2rem;
+		border-radius: var(--r-md);
+		border: 1px solid var(--line);
+		background: var(--surface);
+	}
+
+	.standard-list span {
+		grid-row: 1 / -1;
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		font-weight: 500;
+		color: var(--text-faint);
+		background: none;
+		align-self: start;
+		padding-top: 0.2rem;
+	}
+
+	.standard-list strong {
+		font-family: var(--font-display);
+		font-size: 1.02rem;
+	}
+
+	.standard-list p {
+		font-size: 0.88rem;
+		color: var(--text-soft);
+	}
+
+	@media (max-width: 860px) {
+		.presentation,
+		.standard-panel {
+			grid-template-columns: 1fr;
+		}
+
+		.presentation-visual {
+			min-height: 260px;
+		}
+	}
+</style>

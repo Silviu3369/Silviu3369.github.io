@@ -1,0 +1,138 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout title="Contact" description="Get in touch with Ionel Silviu Ghimpau by email, GitHub, or LinkedIn.">
+	<section class="page-hero contact-hero">
+		<div class="shell contact-inner">
+			<div class="contact-head" data-reveal>
+				<p class="eyebrow">Contact</p>
+				<h1 class="display-1">Let’s talk.</h1>
+				<p class="lead">
+					I’m Ionel Silviu Ghimpau. I build Windows tools, work through network and infrastructure projects, and publish what I learn along the way.
+				</p>
+				<p class="contact-note">If you have a question about a project, found something that could be better, or simply want to exchange ideas, email is the easiest way to reach me.</p>
+				<a class="big-mail" href={`mailto:${site.email}`}>
+					{site.email} <span class="arr" aria-hidden="true">→</span>
+				</a>
+			</div>
+
+			<div class="contact-cards">
+				<a class="card card-hover contact-card" href={`mailto:${site.email}`} data-reveal style="--accent:#4f8cff">
+					<span class="chip">Best way to reach me</span>
+					<strong>Email me</strong>
+					<p>I read every message and reply when I can.</p>
+					<span class="text-link">{site.email} <span class="arr" aria-hidden="true">→</span></span>
+				</a>
+				<a class="card card-hover contact-card" href={site.github} target="_blank" rel="noreferrer" data-reveal style="--accent:#8b7cff; --reveal-delay:.08s">
+					<span class="chip">Code and issues</span>
+					<strong>GitHub</strong>
+					<p>For bugs or feature ideas, opening an issue keeps the conversation with the project.</p>
+					<span class="text-link">github.com/{site.githubHandle} <span class="arr" aria-hidden="true">↗</span></span>
+				</a>
+				<a class="card card-hover contact-card" href={site.linkedin} target="_blank" rel="noreferrer" data-reveal style="--accent:#38c9b9; --reveal-delay:.16s">
+					<span class="chip">Work</span>
+					<strong>LinkedIn</strong>
+					<p>You can also find me there for professional conversations and collaboration.</p>
+					<span class="text-link">linkedin.com/in/{site.linkedinHandle} <span class="arr" aria-hidden="true">↗</span></span>
+				</a>
+			</div>
+
+			<div class="contact-meta" data-reveal>
+				<span class="chip">Timezone · CET</span>
+				<span class="chip">English · Nederlands · Română</span>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.contact-hero {
+		padding-bottom: clamp(3rem, 6vw, 4.5rem);
+	}
+
+	.contact-inner {
+		display: grid;
+		gap: clamp(2rem, 4vw, 3rem);
+	}
+
+	.contact-head {
+		display: grid;
+		gap: 1.05rem;
+		justify-items: start;
+		max-width: 52rem;
+	}
+
+	.contact-note {
+		max-width: 60ch;
+		font-size: 0.98rem;
+		color: var(--text-soft);
+	}
+
+	.big-mail {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.8rem;
+		margin-top: 0.6rem;
+		font-family: var(--font-display);
+		font-size: clamp(1.08rem, 2.3vw, 1.45rem);
+		font-weight: 600;
+		letter-spacing: -0.01em;
+		padding-bottom: 0.4rem;
+		border-bottom: 1px solid var(--line-strong);
+		background: none;
+		transition: opacity 0.25s var(--ease);
+	}
+
+	.big-mail .arr {
+		transition: transform 0.25s var(--ease);
+	}
+
+	.big-mail:hover .arr {
+		transform: translateX(5px);
+	}
+
+	.contact-cards {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.2rem;
+	}
+
+	.contact-card {
+		display: grid;
+		gap: 0.6rem;
+		padding: 1.5rem;
+		align-content: start;
+		justify-items: start;
+	}
+
+	.contact-card strong {
+		font-family: var(--font-display);
+		font-size: 1.25rem;
+		margin-top: 0.4rem;
+	}
+
+	.contact-card p {
+		font-size: 0.92rem;
+		color: var(--text-soft);
+	}
+
+	.contact-card .text-link {
+		margin-top: 0.5rem;
+		max-width: 100%;
+		overflow-wrap: anywhere;
+	}
+
+	.contact-meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+	}
+
+	@media (max-width: 860px) {
+		.contact-cards {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

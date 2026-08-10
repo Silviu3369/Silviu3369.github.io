@@ -1,0 +1,262 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { engineeringProjects, type EngineeringProject } from '../../data/site';
+
+export function getStaticPaths() {
+	return engineeringProjects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+interface Props {
+	project: EngineeringProject;
+}
+const { project } = Astro.props;
+---
+
+<BaseLayout title={project.name} description={project.description}>
+	<section class="page-hero" style={`--accent:${project.accent}`}>
+		<div class="shell">
+			<a class="back-link" href="/engineering"><span class="arr" aria-hidden="true">←</span> Back to engineering</a>
+
+			<div class="case-head">
+				<div class="case-title" data-reveal>
+					<span class="chip">{project.category}</span>
+					<h1 class="display-1">{project.name}</h1>
+					<p class="lead">{project.description}</p>
+				</div>
+				<div class="case-side card" data-reveal style="--reveal-delay:.1s">
+					<p>{project.context}</p>
+					<a class="btn btn-ghost btn-sm" href={project.repository} target="_blank" rel="noreferrer">
+						View the repository <span class="arr arr-ext" aria-hidden="true">↗</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	{project.image && (
+		<section class="section-tight">
+			<div class="shell">
+				<figure class="topology card" data-reveal style={`--accent:${project.accent}`}>
+					<img src={project.image} alt={`${project.name} network topology diagram`} loading="lazy" />
+					<figcaption>
+						<span class="chip">Topology</span>
+						<span>{project.name}</span>
+					</figcaption>
+				</figure>
+			</div>
+		</section>
+	)}
+
+	<section class="section-tight" style={`--accent:${project.accent}`}>
+		<div class="shell case-grid">
+			<div class="case-block" data-reveal>
+				<p class="eyebrow">What I used</p>
+				<h2>Tools and technologies</h2>
+				<div class="tech-cloud">
+					{project.technologies.map((tech) => <span class="chip">{tech}</span>)}
+				</div>
+			</div>
+
+			<div class="case-block" data-reveal style="--reveal-delay:.08s">
+				<p class="eyebrow">What it covers</p>
+				<h2>The main parts of the project</h2>
+				<ul class="hl-list">
+					{project.highlights.map((highlight) => <li>{highlight}</li>)}
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<section class="section-tight" style={`--accent:${project.accent}`}>
+		<div class="shell">
+			<div class="section-head" data-reveal>
+				<p class="eyebrow">Design notes</p>
+				<h2 class="display-2">Why I made these choices.</h2>
+			</div>
+			<div class="notes-grid">
+				{project.designNotes.map((note, index) => (
+					<div class="card note-card" data-reveal style={`--reveal-delay:${index * 0.08}s`}>
+						<strong>{note.title}</strong>
+						<p>{note.text}</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="section-tight">
+		<div class="shell">
+			<div class="g-panel repo-panel" data-reveal>
+				<p class="eyebrow">Source & documentation</p>
+				<h2 class="display-2">Read the code and project notes on GitHub.</h2>
+				<a class="btn btn-primary" href={project.repository} target="_blank" rel="noreferrer">
+					View the repository <span class="arr arr-ext" aria-hidden="true">↗</span>
+				</a>
+			</div>
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.case-head {
+		display: grid;
+		grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+		gap: clamp(2rem, 4.5vw, 3.5rem);
+		align-items: start;
+		margin-top: 2rem;
+	}
+
+	.case-title {
+		display: grid;
+		gap: 1rem;
+		justify-items: start;
+	}
+
+	.case-side {
+		display: grid;
+		gap: 1.2rem;
+		padding: 1.6rem;
+		justify-items: start;
+	}
+
+	.case-side p {
+		font-size: 0.94rem;
+		color: var(--text-soft);
+	}
+
+	.topology {
+		overflow: hidden;
+		padding: 0.6rem;
+	}
+
+	.topology img {
+		width: 100%;
+		border-radius: calc(var(--r-lg) - 6px);
+		border: 1px solid var(--line);
+	}
+
+	.topology figcaption {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 0.85rem 0.75rem 0.5rem;
+		font-family: var(--font-mono);
+		font-size: 0.76rem;
+		color: var(--text-faint);
+	}
+
+	.case-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+		gap: clamp(2rem, 5vw, 4rem);
+		align-items: start;
+	}
+
+	.case-block {
+		display: grid;
+		gap: 1rem;
+		justify-items: start;
+	}
+
+	.case-block h2 {
+		font-size: 1.5rem;
+	}
+
+	.tech-cloud {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.hl-list {
+		display: grid;
+		gap: 0.6rem;
+		width: 100%;
+	}
+
+	.hl-list li {
+		position: relative;
+		padding: 0.85rem 1.1rem 0.85rem 2.6rem;
+		border-radius: var(--r-sm);
+		border: 1px solid var(--line);
+		background: var(--surface);
+		font-size: 0.94rem;
+		color: var(--text-soft);
+	}
+
+	.hl-list li::before {
+		content: '✓';
+		position: absolute;
+		left: 1rem;
+		top: 50%;
+		transform: translateY(-50%);
+		display: grid;
+		place-items: center;
+		width: 18px;
+		height: 18px;
+		border-radius: 6px;
+		background: var(--surface);
+		border: 1px solid var(--line-strong);
+		color: var(--text-soft);
+		font-size: 0.64rem;
+		line-height: 1;
+	}
+
+	.notes-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1.2rem;
+	}
+
+	.note-card {
+		display: grid;
+		gap: 0.6rem;
+		padding: 1.6rem;
+		align-content: start;
+	}
+
+	.note-card strong {
+		font-family: var(--font-display);
+		font-size: 1.06rem;
+	}
+
+	.note-card strong::before {
+		content: '';
+		display: block;
+		width: 26px;
+		height: 3px;
+		border-radius: 3px;
+		background: linear-gradient(90deg, var(--text-faint), transparent);
+		margin-bottom: 0.8rem;
+	}
+
+	.note-card p {
+		font-size: 0.92rem;
+		color: var(--text-soft);
+	}
+
+	.repo-panel {
+		display: grid;
+		gap: 1.2rem;
+		justify-items: center;
+		text-align: center;
+		padding: clamp(2.6rem, 6vw, 4rem) clamp(1.5rem, 5vw, 4rem);
+	}
+
+	.repo-panel .btn {
+		position: relative;
+		z-index: 1;
+	}
+
+	@media (max-width: 900px) {
+		.case-head,
+		.case-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.notes-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

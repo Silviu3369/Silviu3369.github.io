@@ -1,0 +1,277 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout>
+	<section class="home-hero">
+		<div class="shell home-hero-inner" data-reveal>
+			<p class="home-identity">{site.name}</p>
+			<h1>I build useful software and practical infrastructure.</h1>
+			<p class="home-intro">
+				Most of my work starts with a real problem: a Windows machine that needs a clear diagnosis, a network that has to be understood, or a repetitive task worth automating.
+			</p>
+			<div class="home-actions">
+				<a class="btn btn-primary" href="/products">Explore products <span class="arr" aria-hidden="true">→</span></a>
+				<a class="btn btn-ghost" href={site.github} target="_blank" rel="noreferrer">GitHub <span class="arr arr-ext" aria-hidden="true">↗</span></a>
+			</div>
+		</div>
+	</section>
+
+	<section class="home-purpose">
+		<div class="shell purpose-layout">
+			<div class="purpose-heading" data-reveal>
+				<p class="eyebrow">What I do</p>
+				<h2>Work I can explain, maintain, and share.</h2>
+			</div>
+			<div class="purpose-copy">
+				<article data-reveal>
+					<span>01</span>
+					<div>
+						<h3>What I work on</h3>
+						<p>I build Windows tools for support work, design Cisco network labs, and automate infrastructure tasks that would otherwise be repetitive or easy to get wrong.</p>
+					</div>
+				</article>
+				<article data-reveal style="--reveal-delay:.08s">
+					<span>02</span>
+					<div>
+						<h3>Why I share it</h3>
+						<p>I prefer work that leaves less room for guesswork. Publishing the source and the reasoning keeps me honest, helps other people learn from it, and makes every project easier to improve.</p>
+					</div>
+				</article>
+			</div>
+		</div>
+	</section>
+
+	<nav class="home-routes" aria-label="Explore the work">
+		<div class="shell route-list">
+			<a href="/products" data-reveal><span>Products</span><p>The Windows tools I build for everyday support work.</p><i aria-hidden="true">→</i></a>
+			<a href="/engineering" data-reveal style="--reveal-delay:.06s"><span>Engineering</span><p>Network and automation projects, with the decisions documented.</p><i aria-hidden="true">→</i></a>
+			<a href="/open-source" data-reveal style="--reveal-delay:.12s"><span>Open Source</span><p>The code, releases, notes, and history behind the work.</p><i aria-hidden="true">→</i></a>
+		</div>
+	</nav>
+</BaseLayout>
+
+<style>
+	.home-hero {
+		position: relative;
+		min-height: min(760px, 82vh);
+		display: flex;
+		align-items: center;
+		padding: calc(var(--header-h) + 3rem) 0 4rem;
+	}
+
+	.home-hero::after {
+		content: '';
+		position: absolute;
+		left: 50%;
+		bottom: 0;
+		width: min(var(--shell), calc(100% - 2.5rem));
+		height: 1px;
+		transform: translateX(-50%);
+		background: linear-gradient(90deg, transparent, var(--line) 14%, var(--line) 86%, transparent);
+	}
+
+	.home-hero-inner {
+		display: grid;
+		justify-items: start;
+		max-width: 1160px;
+	}
+
+	.home-identity {
+		margin-bottom: clamp(1.5rem, 3.5vw, 2.5rem);
+		font-family: var(--font-mono);
+		font-size: 0.76rem;
+		font-weight: 500;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--text-soft);
+	}
+
+	.home-identity span {
+		margin-inline: 0.55rem;
+		color: var(--text-faint);
+	}
+
+	.home-hero h1 {
+		max-width: 16ch;
+		font-size: clamp(2.85rem, 6.5vw, 4.85rem);
+		font-weight: 600;
+		letter-spacing: -0.05em;
+		line-height: 1;
+		text-wrap: balance;
+	}
+
+	.home-intro {
+		max-width: 620px;
+		margin-top: clamp(1.6rem, 3vw, 2.25rem);
+		font-size: clamp(1rem, 1.6vw, 1.16rem);
+		line-height: 1.68;
+		color: var(--text-soft);
+	}
+
+	.home-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.8rem;
+		margin-top: 1.8rem;
+	}
+
+	.home-actions .btn-primary {
+		border: 1px solid var(--text);
+		background: var(--text);
+		color: var(--bg);
+		box-shadow: none;
+	}
+
+	.home-actions .btn-primary:hover {
+		transform: translateY(-1px);
+		box-shadow: 0 12px 26px -20px color-mix(in srgb, var(--text) 45%, transparent);
+	}
+
+	.home-purpose {
+		padding: clamp(4.5rem, 8vw, 7rem) 0;
+	}
+
+	.purpose-layout {
+		display: grid;
+		grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+		gap: clamp(3rem, 9vw, 8rem);
+		align-items: start;
+	}
+
+	.purpose-heading h2 {
+		max-width: 13ch;
+		margin-top: 1.25rem;
+		font-size: clamp(1.95rem, 3.8vw, 3.1rem);
+		letter-spacing: -0.035em;
+	}
+
+	.purpose-copy {
+		display: grid;
+	}
+
+	.purpose-copy article {
+		position: relative;
+		display: grid;
+		grid-template-columns: 3rem 1fr;
+		gap: 1.4rem;
+		padding: 1.8rem 0 2.2rem;
+	}
+
+	.purpose-copy article::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		height: 1px;
+		background: linear-gradient(90deg, var(--line-strong), var(--line) 48%, transparent 100%);
+	}
+
+	.purpose-copy article > span {
+		padding-top: 0.2rem;
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		color: var(--text-faint);
+	}
+
+	.purpose-copy h3 {
+		margin-bottom: 0.65rem;
+		font-size: 1.22rem;
+	}
+
+	.purpose-copy p {
+		max-width: 54ch;
+		color: var(--text-soft);
+	}
+
+	.home-routes {
+		padding-bottom: clamp(4rem, 9vw, 7rem);
+	}
+
+	.route-list {
+		position: relative;
+	}
+
+	.route-list::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		height: 1px;
+		background: linear-gradient(90deg, transparent, var(--line-strong) 12%, var(--line) 88%, transparent);
+	}
+
+	.route-list a {
+		position: relative;
+		display: grid;
+		grid-template-columns: minmax(150px, 0.55fr) minmax(0, 1fr) auto;
+		gap: 2rem;
+		align-items: center;
+		padding: 1.65rem 0;
+		transition: color 0.2s var(--ease), padding 0.25s var(--ease);
+	}
+
+	.route-list a::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		height: 1px;
+		background: linear-gradient(90deg, transparent, var(--line) 10%, var(--line) 78%, transparent 100%);
+	}
+
+	.route-list a:hover {
+		padding-inline: 0.8rem;
+		color: var(--text);
+	}
+
+	.route-list span {
+		font-family: var(--font-display);
+		font-size: 1.08rem;
+		font-weight: 600;
+	}
+
+	.route-list p {
+		font-size: 0.92rem;
+		color: var(--text-soft);
+	}
+
+	.route-list i {
+		font-style: normal;
+		font-size: 1.1rem;
+		color: var(--text-faint);
+	}
+
+	@media (max-width: 760px) {
+		.home-hero {
+			min-height: auto;
+			padding: calc(var(--header-h) + 3rem) 0 4rem;
+		}
+
+		.home-hero h1 {
+			font-size: clamp(2.7rem, 12vw, 3.8rem);
+		}
+
+		.purpose-layout {
+			grid-template-columns: 1fr;
+		}
+
+		.route-list a {
+			grid-template-columns: 1fr auto;
+			gap: 0.5rem 1.5rem;
+		}
+
+		.route-list p {
+			grid-column: 1;
+		}
+
+		.route-list i {
+			grid-column: 2;
+			grid-row: 1 / span 2;
+		}
+	}
+</style>
