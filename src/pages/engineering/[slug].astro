@@ -15,7 +15,7 @@ const { project } = Astro.props;
 <BaseLayout title={project.name} description={project.description}>
 	<section class="page-hero" style={`--accent:${project.accent}`}>
 		<div class="shell">
-			<a class="back-link" href="/engineering"><span class="arr" aria-hidden="true">←</span> Back to engineering</a>
+			<a class="back-link" href="/engineering/"><span class="arr" aria-hidden="true">←</span> Back to engineering</a>
 
 			<div class="case-head">
 				<div class="case-title" data-reveal>
@@ -28,6 +28,15 @@ const { project } = Astro.props;
 					<a class="btn btn-ghost btn-sm" href={project.repository} target="_blank" rel="noreferrer">
 						View the repository <span class="arr arr-ext" aria-hidden="true">↗</span>
 					</a>
+					{project.relatedProject && (
+						<div class="related-project">
+							<span>Related project</span>
+							<a href={project.relatedProject.href}>
+								{project.relatedProject.name} <span class="arr" aria-hidden="true">→</span>
+							</a>
+							<p>{project.relatedProject.text}</p>
+						</div>
+					)}
 				</div>
 			</div>
 		</div>
@@ -37,11 +46,43 @@ const { project } = Astro.props;
 		<section class="section-tight">
 			<div class="shell">
 				<figure class="topology card" data-reveal style={`--accent:${project.accent}`}>
-					<img src={project.image} alt={`${project.name} network topology diagram`} loading="lazy" />
+					<a
+						class="topology-link"
+						href={project.image}
+						target="_blank"
+						rel="noreferrer"
+						aria-label={`Open the ${project.name} topology diagram at full size`}
+					>
+						<img src={project.image} alt={`${project.name} network topology diagram`} loading="lazy" />
+						<span class="topology-action">Open full-size diagram <span aria-hidden="true">↗</span></span>
+					</a>
 					<figcaption>
 						<span class="chip">Topology</span>
 						<span>{project.name}</span>
 					</figcaption>
+				</figure>
+			</div>
+		</section>
+	)}
+
+	{!project.image && project.systemFlow && (
+		<section class="section-tight" style={`--accent:${project.accent}`}>
+			<div class="shell">
+				<figure class="automation-flow card" data-reveal>
+					<div class="flow-intro">
+						<span class="chip">Automation map</span>
+						<h2 class="display-2">From one model to a reviewable result.</h2>
+					</div>
+					<div class="flow-grid">
+						{project.systemFlow.map((stage, index) => (
+							<div class="flow-stage">
+								<span class="flow-step">0{index + 1}</span>
+								<strong>{stage.label}</strong>
+								<ul>{stage.items.map((item) => <li>{item}</li>)}</ul>
+							</div>
+						))}
+					</div>
+					<figcaption>Blaze AD Automation · provisioning flow</figcaption>
 				</figure>
 			</div>
 		</section>
@@ -124,15 +165,84 @@ const { project } = Astro.props;
 		color: var(--text-soft);
 	}
 
+	.related-project {
+		display: grid;
+		gap: 0.4rem;
+		width: 100%;
+		padding-top: 1.15rem;
+		border-top: 1px solid var(--line);
+	}
+
+	.related-project > span {
+		font-family: var(--font-mono);
+		font-size: 0.68rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--text-faint);
+	}
+
+	.related-project a {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		width: fit-content;
+		font-family: var(--font-display);
+		font-weight: 600;
+	}
+
+	.related-project a .arr {
+		transition: transform 0.2s var(--ease);
+	}
+
+	.related-project a:hover .arr {
+		transform: translateX(3px);
+	}
+
+	.related-project p {
+		font-size: 0.82rem;
+	}
+
 	.topology {
 		overflow: hidden;
 		padding: 0.6rem;
+	}
+
+	.topology-link {
+		position: relative;
+		display: block;
+		overflow: hidden;
+		border-radius: calc(var(--r-lg) - 6px);
 	}
 
 	.topology img {
 		width: 100%;
 		border-radius: calc(var(--r-lg) - 6px);
 		border: 1px solid var(--line);
+		transition: transform 0.45s var(--ease), filter 0.45s var(--ease);
+	}
+
+	.topology-link:hover img {
+		transform: scale(1.01);
+		filter: brightness(1.03);
+	}
+
+	.topology-action {
+		position: absolute;
+		right: 1rem;
+		bottom: 1rem;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 0.58rem 0.85rem;
+		border: 1px solid rgba(255, 255, 255, 0.28);
+		border-radius: 99px;
+		background: rgba(14, 17, 22, 0.82);
+		backdrop-filter: blur(12px);
+		color: #f1f2f4;
+		font-family: var(--font-display);
+		font-size: 0.78rem;
+		font-weight: 600;
+		box-shadow: 0 16px 32px -22px rgba(0, 0, 0, 0.9);
 	}
 
 	.topology figcaption {
@@ -143,6 +253,108 @@ const { project } = Astro.props;
 		padding: 0.85rem 0.75rem 0.5rem;
 		font-family: var(--font-mono);
 		font-size: 0.76rem;
+		color: var(--text-faint);
+	}
+
+	.automation-flow {
+		display: grid;
+		gap: clamp(1.8rem, 4vw, 2.8rem);
+		padding: clamp(1.5rem, 4vw, 2.4rem);
+		overflow: hidden;
+	}
+
+	.automation-flow::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background:
+			radial-gradient(28rem 18rem at 15% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 66%),
+			linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+		background-size: auto, 44px 44px, 44px 44px;
+		pointer-events: none;
+	}
+
+	.flow-intro,
+	.flow-grid,
+	.automation-flow figcaption {
+		position: relative;
+		z-index: 1;
+	}
+
+	.flow-intro {
+		display: grid;
+		gap: 0.9rem;
+		justify-items: start;
+	}
+
+	.flow-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.flow-stage {
+		position: relative;
+		display: grid;
+		gap: 0.75rem;
+		align-content: start;
+		min-height: 11rem;
+		padding: 1.3rem;
+		border: 1px solid var(--line-strong);
+		border-radius: var(--r-md);
+		background: color-mix(in srgb, var(--surface-strong) 82%, transparent);
+	}
+
+	.flow-stage:not(:last-child)::after {
+		content: '→';
+		position: absolute;
+		right: -1.55rem;
+		top: 50%;
+		z-index: 2;
+		transform: translateY(-50%);
+		width: 2rem;
+		text-align: center;
+		color: var(--text-faint);
+	}
+
+	.flow-step {
+		font-family: var(--font-mono);
+		font-size: 0.68rem;
+		color: var(--text-faint);
+	}
+
+	.flow-stage strong {
+		font-family: var(--font-display);
+		font-size: 1.05rem;
+	}
+
+	.flow-stage ul {
+		display: grid;
+		gap: 0.45rem;
+	}
+
+	.flow-stage li {
+		position: relative;
+		padding-left: 0.9rem;
+		font-size: 0.86rem;
+		color: var(--text-soft);
+	}
+
+	.flow-stage li::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0.62em;
+		width: 4px;
+		height: 4px;
+		border-radius: 50%;
+		background: var(--text-faint);
+	}
+
+	.automation-flow figcaption {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
 		color: var(--text-faint);
 	}
 
@@ -257,6 +469,32 @@ const { project } = Astro.props;
 
 		.notes-grid {
 			grid-template-columns: 1fr;
+		}
+
+		.flow-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.flow-stage {
+			min-height: 0;
+		}
+
+		.flow-stage:not(:last-child)::after {
+			content: '↓';
+			right: auto;
+			left: 50%;
+			top: auto;
+			bottom: -1.55rem;
+			transform: translateX(-50%);
+		}
+	}
+
+	@media (max-width: 560px) {
+		.topology-action {
+			right: 0.65rem;
+			bottom: 0.65rem;
+			padding: 0.5rem 0.7rem;
+			font-size: 0.7rem;
 		}
 	}
 </style>

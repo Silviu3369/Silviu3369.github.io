@@ -18,7 +18,10 @@ const {
 	noindex = false,
 } = Astro.props;
 const pageTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.tagline}`;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url);
+const canonicalPath = Astro.url.pathname === '/'
+	? '/'
+	: `${Astro.url.pathname.replace(/\/+$/, '')}/`;
+const canonical = new URL(canonicalPath, Astro.site ?? site.url);
 const socialImage = new URL(image, Astro.site ?? site.url);
 ---
 

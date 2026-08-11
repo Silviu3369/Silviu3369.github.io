@@ -1,0 +1,127 @@
+---
+interface Props {
+	src: string;
+	variant?: 'icon' | 'wordmark';
+	size?: 'compact' | 'large';
+	loading?: 'eager' | 'lazy';
+}
+
+const {
+	src,
+	variant = 'icon',
+	size = 'compact',
+	loading = 'lazy',
+} = Astro.props;
+---
+
+<div class:list={['app-mark', `app-mark--${variant}`, `app-mark--${size}`]}>
+	<div class="app-mark-surface">
+		<img src={src} alt="" loading={loading} decoding="async" />
+	</div>
+</div>
+
+<style>
+	.app-mark {
+		position: relative;
+		display: grid;
+		place-items: center;
+		isolation: isolate;
+	}
+
+	.app-mark::before {
+		content: '';
+		position: absolute;
+		width: 150%;
+		aspect-ratio: 1;
+		border-radius: 50%;
+		background: radial-gradient(circle, color-mix(in srgb, var(--accent) 16%, transparent), transparent 68%);
+		filter: blur(12px);
+		opacity: 0.75;
+		z-index: -1;
+	}
+
+	.app-mark-surface {
+		position: relative;
+		display: grid;
+		place-items: center;
+		width: 9rem;
+		aspect-ratio: 1;
+		padding: 1rem;
+		overflow: hidden;
+		border: 1px solid var(--line-strong);
+		border-radius: 2.25rem;
+		background:
+			linear-gradient(145deg, color-mix(in srgb, var(--accent) 8%, var(--surface-strong)), var(--surface) 62%),
+			var(--bg-raised);
+		box-shadow:
+			inset 0 1px 0 rgba(255, 255, 255, 0.06),
+			0 24px 48px -30px rgba(0, 0, 0, 0.9);
+	}
+
+	.app-mark-surface::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(145deg, rgba(255, 255, 255, 0.045), transparent 46%);
+		pointer-events: none;
+	}
+
+	.app-mark img {
+		position: relative;
+		z-index: 1;
+		width: 100%;
+		height: 100%;
+		border-radius: 1.45rem;
+		object-fit: contain;
+		filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.36));
+	}
+
+	.app-mark--large .app-mark-surface {
+		width: 9.75rem;
+		padding: 1.05rem;
+		border-radius: 2.45rem;
+	}
+
+	.app-mark--wordmark .app-mark-surface {
+		width: 12rem;
+		aspect-ratio: 1.55;
+		padding: 1rem;
+		border-radius: 2rem;
+	}
+
+	.app-mark--wordmark.app-mark--large .app-mark-surface {
+		width: 13rem;
+		padding: 1.1rem;
+		border-radius: 2.15rem;
+	}
+
+	.app-mark--wordmark img {
+		height: auto;
+		max-height: 100%;
+		border: 1px solid rgba(255, 255, 255, 0.5);
+		border-radius: 1.15rem;
+		background: #f4f5f6;
+		filter:
+			saturate(0.94)
+			drop-shadow(0 14px 24px rgba(0, 0, 0, 0.28));
+	}
+
+	:global(:root[data-theme='light']) .app-mark-surface {
+		box-shadow:
+			inset 0 1px 0 rgba(255, 255, 255, 0.75),
+			0 24px 48px -32px rgba(38, 42, 47, 0.36);
+	}
+
+	@media (max-width: 520px) {
+		.app-mark-surface,
+		.app-mark--large .app-mark-surface {
+			width: 8.5rem;
+			border-radius: 2rem;
+		}
+
+		.app-mark--wordmark .app-mark-surface,
+		.app-mark--wordmark.app-mark--large .app-mark-surface {
+			width: 11rem;
+		}
+	}
+</style>

@@ -8,7 +8,7 @@ export const site = {
 	email: 'ghimpausilviu@gmail.com',
 	github: 'https://github.com/Silviu3369',
 	githubHandle: 'Silviu3369',
-	linkedin: 'https://be.linkedin.com/in/silviu-ghimpau/en',
+	linkedin: 'https://www.linkedin.com/in/silviu-ghimpau/?locale=en',
 	linkedinHandle: 'silviu-ghimpau',
 };
 
@@ -129,6 +129,15 @@ export type EngineeringProject = {
 	technologies: string[];
 	highlights: string[];
 	designNotes: { title: string; text: string }[];
+	relatedProject?: {
+		name: string;
+		href: string;
+		text: string;
+	};
+	systemFlow?: {
+		label: string;
+		items: string[];
+	}[];
 };
 
 export const engineeringProjects: EngineeringProject[] = [
@@ -191,6 +200,11 @@ export const engineeringProjects: EngineeringProject[] = [
 		repository: 'https://github.com/Silviu3369/Cisco-Blaze-project',
 		image: '/assets/cisco-blaze-topology.webp',
 		accent: '#8b7cff',
+		relatedProject: {
+			name: 'Blaze AD Automation',
+			href: '/engineering/blaze-ad-automation/',
+			text: 'The same office and department model continued as an Active Directory automation project.',
+		},
 		technologies: ['Cisco IOS', 'VLAN', 'OSPF', 'HSRP', 'ASA', 'ACL', 'Enterprise design'],
 		highlights: [
 			'Two-office topology with defined organizational boundaries',
@@ -214,6 +228,16 @@ export const engineeringProjects: EngineeringProject[] = [
 			'I built this after Cisco Blaze to see how the same office and department model could drive Active Directory work. It creates organizational units, groups, users, folders, shares, permissions, and an audit record from one set of inputs.',
 		repository: 'https://github.com/Silviu3369/Blaze-AD-Automation',
 		accent: '#e8a33d',
+		relatedProject: {
+			name: 'Cisco Blaze',
+			href: '/engineering/cisco-blaze/',
+			text: 'The network project defines the offices and departments used by this automation.',
+		},
+		systemFlow: [
+			{ label: 'Input model', items: ['Sites and departments', 'Users and roles'] },
+			{ label: 'Provisioning', items: ['OUs and groups', 'Folders, shares and permissions'] },
+			{ label: 'Evidence', items: ['CSV audit report', 'Reviewable output'] },
+		],
 		technologies: ['PowerShell', 'Active Directory', 'RBAC', 'SMB', 'NTFS ACL', 'CSV audit'],
 		highlights: [
 			'Organizational units aligned with physical sites and departments',
@@ -269,8 +293,8 @@ export const techMarquee = [
 
 export const navigation = [
 	{ label: 'Home', href: '/' },
-	{ label: 'Products', href: '/products' },
-	{ label: 'Engineering', href: '/engineering' },
-	{ label: 'Open Source', href: '/open-source' },
-	{ label: 'Contact', href: '/contact' },
+	{ label: 'Products', href: '/products/' },
+	{ label: 'Engineering', href: '/engineering/' },
+	{ label: 'Open Source', href: '/open-source/' },
+	{ label: 'Contact', href: '/contact/' },
 ];

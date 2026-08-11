@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import AppMark from '../../components/AppMark.astro';
 import { products, type Product } from '../../data/site';
 
 export function getStaticPaths() {
@@ -15,7 +16,7 @@ const { product } = Astro.props;
 <BaseLayout title={product.name} description={product.description}>
 	<section class="page-hero" style={`--accent:${product.accent}`}>
 		<div class="shell">
-			<a class="back-link" href="/products"><span class="arr" aria-hidden="true">←</span> Back to products</a>
+			<a class="back-link" href="/products/"><span class="arr" aria-hidden="true">←</span> Back to products</a>
 
 			<div class="detail-hero">
 				<div class="detail-copy" data-reveal>
@@ -26,7 +27,6 @@ const { product } = Astro.props;
 						<span class="chip chip-dot" style="--accent:#4ade80">v{product.version} · {product.status}</span>
 						<span class="chip">{product.platform}</span>
 						<span class="chip">Released {product.releaseDate}</span>
-						<span class="chip">Free · Open source</span>
 					</div>
 					<div class="detail-actions">
 						<a class="btn btn-primary" href={product.download} target="_blank" rel="noreferrer">
@@ -44,8 +44,12 @@ const { product } = Astro.props;
 						<span class="chip chip-dot" style="--accent:#4ade80">stable</span>
 					</div>
 					<div class="visual-stage">
-						<div class="logo-glow"></div>
-						<img src={product.logo} alt="" width="132" height="132" loading="eager" />
+						<AppMark
+							src={product.logo}
+							variant={product.slug === 'isg-desk' ? 'wordmark' : 'icon'}
+							size="large"
+							loading="eager"
+						/>
 					</div>
 					<div class="visual-foot">
 						<strong>{product.name}</strong>
@@ -168,20 +172,6 @@ const { product } = Astro.props;
 		position: relative;
 		display: grid;
 		place-items: center;
-	}
-
-	.logo-glow {
-		position: absolute;
-		width: 200px;
-		height: 200px;
-		border-radius: 50%;
-		background: radial-gradient(circle, color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%);
-		filter: blur(8px);
-	}
-
-	.visual-stage img {
-		position: relative;
-		filter: drop-shadow(0 20px 34px rgba(0, 0, 0, 0.6));
 	}
 
 	.visual-foot strong {

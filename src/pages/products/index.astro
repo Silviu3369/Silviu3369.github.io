@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import AppMark from '../../components/AppMark.astro';
 import { products } from '../../data/site';
 ---
 
@@ -24,16 +25,18 @@ import { products } from '../../data/site';
 
 	<section class="section-tight">
 		<div class="shell product-list">
-			{products.map((product, index) => (
+			{products.map((product) => (
 				<article class="card presentation" style={`--accent:${product.accent}`} data-reveal>
 					<div class="presentation-visual" aria-hidden="true">
 						<div class="visual-head">
-							<span class="chip">ISG / 0{index + 1}</span>
+							<span class="visual-label">Windows app</span>
 							<span class="chip chip-dot">v{product.version} · {product.status}</span>
 						</div>
 						<div class="visual-stage">
-							<div class="logo-glow"></div>
-							<img src={product.logo} alt="" width="120" height="120" loading="lazy" />
+							<AppMark
+								src={product.logo}
+								variant={product.slug === 'isg-desk' ? 'wordmark' : 'icon'}
+							/>
 						</div>
 						<div class="visual-foot">
 							<strong>{product.name}</strong>
@@ -49,14 +52,11 @@ import { products } from '../../data/site';
 							{product.features.slice(0, 3).map((feature) => <li>{feature}</li>)}
 						</ul>
 						<div class="presentation-actions">
-							<a class="btn btn-primary btn-sm" href={`/products/${product.slug}`}>
+							<a class="btn btn-primary btn-sm" href={`/products/${product.slug}/`}>
 								See how it works <span class="arr" aria-hidden="true">→</span>
 							</a>
-							<a class="btn btn-ghost btn-sm" href={product.download} target="_blank" rel="noreferrer">
-								Get the latest release <span class="arr arr-ext" aria-hidden="true">↗</span>
-							</a>
 							<a class="text-link" href={product.repository} target="_blank" rel="noreferrer">
-								View source <span class="arr" aria-hidden="true">↗</span>
+								View on GitHub <span class="arr" aria-hidden="true">↗</span>
 							</a>
 						</div>
 					</div>
@@ -131,18 +131,11 @@ import { products } from '../../data/site';
 		place-items: center;
 	}
 
-	.logo-glow {
-		position: absolute;
-		width: 180px;
-		height: 180px;
-		border-radius: 50%;
-		background: radial-gradient(circle, color-mix(in srgb, var(--accent) 18%, transparent), transparent 70%);
-		filter: blur(6px);
-	}
-
-	.visual-stage img {
-		position: relative;
-		filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.55));
+	.visual-label {
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		letter-spacing: 0.04em;
+		color: var(--text-faint);
 	}
 
 	.visual-foot strong {

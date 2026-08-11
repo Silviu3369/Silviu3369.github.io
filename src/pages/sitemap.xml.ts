@@ -1,13 +1,13 @@
 import type { APIRoute } from 'astro';
 import { engineeringProjects, products, site } from '../data/site';
 
-const staticRoutes = ['/', '/products', '/engineering', '/open-source', '/contact'];
+const staticRoutes = ['/', '/products/', '/engineering/', '/open-source/', '/contact/'];
 
 export const GET: APIRoute = () => {
 	const routes = [
 		...staticRoutes,
-		...products.map((product) => `/products/${product.slug}`),
-		...engineeringProjects.map((project) => `/engineering/${project.slug}`),
+		...products.map((product) => `/products/${product.slug}/`),
+		...engineeringProjects.map((project) => `/engineering/${project.slug}/`),
 	];
 
 	const body = `<?xml version="1.0" encoding="UTF-8"?>
