@@ -3,7 +3,7 @@ export const site = {
 	shortName: 'ISG',
 	tagline: 'Open-source software & systems engineering',
 	description:
-		'Personal site of Ionel Silviu Ghimpau, with open-source Windows tools, network projects, and infrastructure automation.',
+		'Personal site of Ionel Silviu Ghimpau, covering open-source software, his work with the GalileoEngine founding team, network projects, and infrastructure automation.',
 	url: 'https://ghimpau.eu',
 	email: 'ghimpausilviu@gmail.com',
 	github: 'https://github.com/Silviu3369',
@@ -253,24 +253,43 @@ export const engineeringProjects: EngineeringProject[] = [
 	},
 ];
 
-export const labProjects = [
+export type LabProject = {
+	name: string;
+	type: string;
+	description: string;
+	url: string;
+	status?: string;
+	linkLabel?: string;
+	featured?: boolean;
+	accent?: string;
+	logo?: string;
+};
+
+export const labProjects: LabProject[] = [
 	{
 		name: 'GalileoEngine',
-		type: 'Browser systems research',
-		description: 'An experimental browser project where I document what works, what does not, and what I learn along the way.',
-		url: 'https://silviu3369.github.io/galileoengine-site-v2/',
+		type: 'Servo-derived browser engine',
+		description: 'A Servo-derived browser engine I build with two co-founders. I focus on product engineering, quality, and delivery while the team shares ownership and major decisions.',
+		url: 'https://galileobrowser.com/',
+		status: 'Three co-founders',
+		linkLabel: 'Visit the official site',
+		featured: true,
+		accent: '#2f8f68',
+		logo: '/assets/galileo-symbol.png',
 	},
 	{
 		name: 'AION',
 		type: 'AI systems experiment',
 		description: 'A hands-on assistant experiment combining voice, tools, and smart-home interface ideas.',
 		url: 'https://github.com/Silviu3369/AION',
+		linkLabel: 'View on GitHub',
 	},
 	{
 		name: 'Nexus',
 		type: 'AI interface lab',
 		description: 'A small TypeScript interface I use to explore AI-assisted interaction ideas.',
 		url: 'https://github.com/Silviu3369/Nexus',
+		linkLabel: 'View on GitHub',
 	},
 ];
 

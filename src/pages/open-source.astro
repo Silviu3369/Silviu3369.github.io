@@ -5,14 +5,17 @@ import { engineeringProjects, labProjects, products, site } from '../data/site';
 const groups = [
 	{
 		label: 'Products',
+		noun: 'repositories',
 		items: products.map((p) => ({ name: p.name, description: p.description, url: p.repository, meta: `v${p.version}` })),
 	},
 	{
 		label: 'Engineering',
+		noun: 'repositories',
 		items: engineeringProjects.map((p) => ({ name: p.name, description: p.description, url: p.repository, meta: p.category })),
 	},
 	{
 		label: 'Research',
+		noun: 'projects',
 		items: labProjects.map((p) => ({ name: p.name, description: p.description, url: p.url, meta: p.type })),
 	},
 ];
@@ -20,7 +23,7 @@ const groups = [
 
 <BaseLayout
 	title="Open Source"
-	description="Every public product and architecture includes its source, documentation, and project history."
+	description="Open-source products, engineering projects, and collaborative browser systems research involving Ionel Silviu Ghimpau."
 >
 	<section class="page-hero">
 		<div class="shell page-hero-inner" data-reveal>
@@ -64,7 +67,7 @@ const groups = [
 				<div class="repo-group" data-reveal>
 					<div class="repo-group-head">
 						<p class="eyebrow">{group.label}</p>
-						<span class="chip">{String(group.items.length).padStart(2, '0')} repositories</span>
+						<span class="chip">{String(group.items.length).padStart(2, '0')} {group.noun}</span>
 					</div>
 					<ul>
 						{group.items.map((item) => (
@@ -89,7 +92,7 @@ const groups = [
 		<div class="shell">
 			<div class="g-panel gh-panel" data-reveal>
 				<p class="eyebrow">GitHub</p>
-				<h2 class="display-2">You can find all of it on GitHub.</h2>
+				<h2 class="display-2">You can find the source on GitHub.</h2>
 				<a class="btn btn-primary" href={site.github} target="_blank" rel="noreferrer">
 					Visit my GitHub <span class="arr arr-ext" aria-hidden="true">↗</span>
 				</a>
