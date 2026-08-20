@@ -1,64 +1,80 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { site } from '../data/site';
 ---
 
 <BaseLayout>
 	<section class="home-hero">
 		<div class="shell home-hero-inner" data-reveal>
-			<p class="home-identity">{site.name}</p>
-			<h1>I build useful software and practical infrastructure.</h1>
+			<p class="home-kicker">Software <span>·</span> Networks <span>·</span> Open source</p>
+			<h1>I build software, explore how systems work, and share what I learn.</h1>
 			<p class="home-intro">
-				Most of my work starts with a real problem: a Windows machine that needs a clear diagnosis, a network that has to be understood, or a repetitive task worth automating.
+				Most projects begin with something I want to understand or make easier: diagnosing a Windows machine, designing a network, automating repetitive work, or helping build a browser engine with a small team.
 			</p>
 			<div class="home-actions">
-				<a class="btn btn-primary" href="/products/">Explore products <span class="arr" aria-hidden="true">→</span></a>
-				<a class="btn btn-ghost" href={site.github} target="_blank" rel="noreferrer">GitHub <span class="arr arr-ext" aria-hidden="true">↗</span></a>
+				<a class="btn btn-primary" href="/products/">See the products <span class="arr" aria-hidden="true">→</span></a>
+				<a class="btn btn-ghost" href="/engineering/">Explore engineering <span class="arr" aria-hidden="true">→</span></a>
 			</div>
 		</div>
 	</section>
 
-	<section class="home-purpose">
-		<div class="shell purpose-layout">
-			<div class="purpose-heading" data-reveal>
-				<p class="eyebrow">What I do</p>
-				<h2>Work I can explain, maintain, and share.</h2>
+	<section class="home-work" aria-labelledby="home-work-title">
+		<div class="shell home-work-layout">
+			<div class="home-section-heading" data-reveal>
+				<p class="home-label">What I work on</p>
+				<h2 id="home-work-title">A mix of software and engineering.</h2>
 			</div>
-			<div class="purpose-copy">
-				<article data-reveal>
-					<span>01</span>
+
+			<div class="work-list">
+				<a href="/products/" data-reveal>
+					<span class="work-number">01</span>
 					<div>
-						<h3>What I work on</h3>
-						<p>I build Windows tools for support work, work with two co-founders on browser-engine research, design Cisco network labs, and automate infrastructure tasks that would otherwise be repetitive or easy to get wrong.</p>
+						<h3>Practical software</h3>
+						<p>Windows tools shaped around diagnosis, support work, and clear results.</p>
 					</div>
-				</article>
-				<article data-reveal style="--reveal-delay:.08s">
-					<span>02</span>
+					<span class="work-arrow" aria-hidden="true">→</span>
+				</a>
+				<a href="/engineering/" data-reveal style="--reveal-delay:.06s">
+					<span class="work-number">02</span>
 					<div>
-						<h3>Why I share it</h3>
-						<p>I prefer work that leaves less room for guesswork. Publishing the source and the reasoning keeps me honest, helps other people learn from it, and makes every project easier to improve.</p>
+						<h3>Networks and infrastructure</h3>
+						<p>Cisco architecture, automation, and the decisions behind the work.</p>
 					</div>
-				</article>
+					<span class="work-arrow" aria-hidden="true">→</span>
+				</a>
+				<a href="/open-source/" data-reveal style="--reveal-delay:.12s">
+					<span class="work-number">03</span>
+					<div>
+						<h3>Open-source work</h3>
+						<p>Public code, releases, and browser-engine work shared with a small team.</p>
+					</div>
+					<span class="work-arrow" aria-hidden="true">→</span>
+				</a>
 			</div>
 		</div>
 	</section>
 
-	<nav class="home-routes" aria-label="Explore the work">
-		<div class="shell route-list">
-			<a href="/products/" data-reveal><span>Products</span><p>The Windows tools I build for everyday support work.</p><i aria-hidden="true">→</i></a>
-			<a href="/engineering/" data-reveal style="--reveal-delay:.06s"><span>Engineering</span><p>Networks, automation, and browser systems, with the decisions documented.</p><i aria-hidden="true">→</i></a>
-			<a href="/open-source/" data-reveal style="--reveal-delay:.12s"><span>Open Source</span><p>The code, releases, notes, and history behind the work.</p><i aria-hidden="true">→</i></a>
+	<section class="home-reason" aria-labelledby="home-reason-title">
+		<div class="shell home-reason-layout">
+			<div data-reveal>
+				<p class="home-label">Why I do it</p>
+				<h2 id="home-reason-title">Building is how I learn.</h2>
+			</div>
+			<div class="reason-copy" data-reveal style="--reveal-delay:.06s">
+				<p>I like taking a problem apart, understanding the pieces, and putting them back together in a way that is easier to use and explain.</p>
+				<p>Keeping the source and the reasoning public leaves a useful record, makes the work easier to improve, and gives other people something real to inspect.</p>
+				<a class="text-link" href="/open-source/">See the open-source work <span aria-hidden="true">→</span></a>
+			</div>
 		</div>
-	</nav>
+	</section>
 </BaseLayout>
 
 <style>
 	.home-hero {
 		position: relative;
-		min-height: min(760px, 82vh);
+		min-height: min(700px, 76vh);
 		display: flex;
 		align-items: center;
-		padding: calc(var(--header-h) + 3rem) 0 4rem;
+		padding: calc(var(--header-h) + 3.25rem) 0 4.5rem;
 	}
 
 	.home-hero::after {
@@ -69,209 +85,233 @@ import { site } from '../data/site';
 		width: min(var(--shell), calc(100% - 2.5rem));
 		height: 1px;
 		transform: translateX(-50%);
-		background: linear-gradient(90deg, transparent, var(--line) 14%, var(--line) 86%, transparent);
+		background: linear-gradient(90deg, transparent, var(--line-strong) 10%, var(--line-strong) 90%, transparent);
 	}
 
 	.home-hero-inner {
 		display: grid;
 		justify-items: start;
-		max-width: 1160px;
 	}
 
-	.home-identity {
-		margin-bottom: clamp(1.5rem, 3.5vw, 2.5rem);
+	.home-kicker,
+	.home-label {
 		font-family: var(--font-mono);
-		font-size: 0.76rem;
+		font-size: 0.72rem;
 		font-weight: 500;
 		letter-spacing: 0.12em;
 		text-transform: uppercase;
 		color: var(--text-soft);
 	}
 
-	.home-identity span {
-		margin-inline: 0.55rem;
+	.home-kicker {
+		margin-bottom: clamp(1.4rem, 3vw, 2rem);
+	}
+
+	.home-kicker span {
+		margin-inline: 0.45rem;
 		color: var(--text-faint);
 	}
 
 	.home-hero h1 {
-		max-width: 16ch;
-		font-size: clamp(2.85rem, 6.5vw, 4.85rem);
+		max-width: 19ch;
+		font-size: clamp(2.7rem, 5.6vw, 4.3rem);
 		font-weight: 600;
-		letter-spacing: -0.05em;
-		line-height: 1;
+		letter-spacing: -0.045em;
+		line-height: 1.02;
 		text-wrap: balance;
 	}
 
 	.home-intro {
-		max-width: 620px;
-		margin-top: clamp(1.6rem, 3vw, 2.25rem);
-		font-size: clamp(1rem, 1.6vw, 1.16rem);
-		line-height: 1.68;
+		max-width: 700px;
+		margin-top: clamp(1.5rem, 2.8vw, 2rem);
+		font-size: clamp(1rem, 1.35vw, 1.12rem);
+		line-height: 1.7;
 		color: var(--text-soft);
+		text-wrap: pretty;
 	}
 
 	.home-actions {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.8rem;
-		margin-top: 1.8rem;
+		gap: 0.75rem;
+		margin-top: 1.75rem;
 	}
 
-	.home-actions .btn-primary {
-		border: 1px solid var(--text);
-		background: var(--text);
-		color: var(--bg);
-		box-shadow: none;
-	}
-
-	.home-actions .btn-primary:hover {
-		transform: translateY(-1px);
-		box-shadow: 0 12px 26px -20px color-mix(in srgb, var(--text) 45%, transparent);
-	}
-
-	.home-purpose {
+	.home-work,
+	.home-reason {
 		padding: clamp(4.5rem, 8vw, 7rem) 0;
 	}
 
-	.purpose-layout {
+	.home-work-layout,
+	.home-reason-layout {
 		display: grid;
-		grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+		grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.28fr);
 		gap: clamp(3rem, 9vw, 8rem);
 		align-items: start;
 	}
 
-	.purpose-heading h2 {
+	.home-section-heading h2,
+	.home-reason h2 {
 		max-width: 13ch;
-		margin-top: 1.25rem;
-		font-size: clamp(1.95rem, 3.8vw, 3.1rem);
+		margin-top: 1.1rem;
+		font-size: clamp(1.8rem, 3.4vw, 2.8rem);
 		letter-spacing: -0.035em;
 	}
 
-	.purpose-copy {
+	.work-list {
 		display: grid;
 	}
 
-	.purpose-copy article {
+	.work-list a {
 		position: relative;
 		display: grid;
-		grid-template-columns: 3rem 1fr;
-		gap: 1.4rem;
-		padding: 1.8rem 0 2.2rem;
+		grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+		gap: 1rem;
+		align-items: start;
+		padding: 1.55rem 0 1.75rem;
+		transition: padding 0.25s var(--ease), color 0.2s var(--ease);
 	}
 
-	.purpose-copy article::before {
+	.work-list a::before {
 		content: '';
 		position: absolute;
-		left: 0;
-		right: 0;
-		top: 0;
+		inset: 0 0 auto;
 		height: 1px;
-		background: linear-gradient(90deg, var(--line-strong), var(--line) 48%, transparent 100%);
+		background: linear-gradient(90deg, var(--line-strong), var(--line) 72%, transparent);
 	}
 
-	.purpose-copy article > span {
-		padding-top: 0.2rem;
+	.work-list a:last-child::after {
+		content: '';
+		position: absolute;
+		inset: auto 0 0;
+		height: 1px;
+		background: linear-gradient(90deg, var(--line), transparent);
+	}
+
+	.work-list a:hover {
+		padding-inline: 0.65rem;
+	}
+
+	.work-number {
+		padding-top: 0.18rem;
 		font-family: var(--font-mono);
-		font-size: 0.72rem;
+		font-size: 0.7rem;
 		color: var(--text-faint);
 	}
 
-	.purpose-copy h3 {
-		margin-bottom: 0.65rem;
-		font-size: 1.22rem;
+	.work-list h3 {
+		margin-bottom: 0.45rem;
+		font-size: 1.15rem;
 	}
 
-	.purpose-copy p {
-		max-width: 54ch;
+	.work-list p,
+	.reason-copy {
 		color: var(--text-soft);
 	}
 
-	.home-routes {
-		padding-bottom: clamp(4rem, 9vw, 7rem);
+	.work-list p {
+		max-width: 54ch;
+		font-size: 0.95rem;
 	}
 
-	.route-list {
-		position: relative;
+	.work-arrow {
+		padding-top: 0.05rem;
+		color: var(--text-faint);
+		transition: transform 0.25s var(--ease), color 0.2s var(--ease);
 	}
 
-	.route-list::before {
-		content: '';
-		position: absolute;
-		left: 0;
-		right: 0;
-		top: 0;
-		height: 1px;
-		background: linear-gradient(90deg, transparent, var(--line-strong) 12%, var(--line) 88%, transparent);
-	}
-
-	.route-list a {
-		position: relative;
-		display: grid;
-		grid-template-columns: minmax(150px, 0.55fr) minmax(0, 1fr) auto;
-		gap: 2rem;
-		align-items: center;
-		padding: 1.65rem 0;
-		transition: color 0.2s var(--ease), padding 0.25s var(--ease);
-	}
-
-	.route-list a::after {
-		content: '';
-		position: absolute;
-		left: 0;
-		right: 0;
-		bottom: 0;
-		height: 1px;
-		background: linear-gradient(90deg, transparent, var(--line) 10%, var(--line) 78%, transparent 100%);
-	}
-
-	.route-list a:hover {
-		padding-inline: 0.8rem;
+	.work-list a:hover .work-arrow {
+		transform: translateX(3px);
 		color: var(--text);
 	}
 
-	.route-list span {
-		font-family: var(--font-display);
-		font-size: 1.08rem;
-		font-weight: 600;
+	.home-reason {
+		position: relative;
+		padding-top: clamp(3.75rem, 7vw, 5.75rem);
 	}
 
-	.route-list p {
-		font-size: 0.92rem;
-		color: var(--text-soft);
+	.home-reason::before {
+		content: '';
+		position: absolute;
+		left: 50%;
+		top: 0;
+		width: min(var(--shell), calc(100% - 2.5rem));
+		height: 1px;
+		transform: translateX(-50%);
+		background: linear-gradient(90deg, transparent, var(--line-strong) 12%, var(--line) 88%, transparent);
 	}
 
-	.route-list i {
-		font-style: normal;
-		font-size: 1.1rem;
-		color: var(--text-faint);
+	.reason-copy {
+		display: grid;
+		gap: 1.1rem;
+		max-width: 620px;
+	}
+
+	.reason-copy p {
+		text-wrap: pretty;
+	}
+
+	.reason-copy .text-link {
+		justify-self: start;
+		margin-top: 0.55rem;
+		color: var(--text);
 	}
 
 	@media (max-width: 760px) {
 		.home-hero {
 			min-height: auto;
-			padding: calc(var(--header-h) + 3rem) 0 4rem;
+			padding: calc(var(--header-h) + 3.25rem) 0 4.25rem;
 		}
 
 		.home-hero h1 {
-			font-size: clamp(2.45rem, 11vw, 3.4rem);
+			max-width: 17ch;
+			font-size: clamp(2.15rem, 10.3vw, 3.15rem);
+			line-height: 1.04;
 		}
 
-		.purpose-layout {
+		.home-intro {
+			font-size: 1rem;
+		}
+
+		.home-work-layout,
+		.home-reason-layout {
 			grid-template-columns: 1fr;
+			gap: 2.5rem;
 		}
 
-		.route-list a {
-			grid-template-columns: 1fr auto;
-			gap: 0.5rem 1.5rem;
+		.home-section-heading h2,
+		.home-reason h2 {
+			max-width: 15ch;
 		}
 
-		.route-list p {
-			grid-column: 1;
+		.work-list a:hover {
+			padding-inline: 0;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.home-kicker {
+			font-size: 0.68rem;
+			letter-spacing: 0.09em;
+			white-space: nowrap;
 		}
 
-		.route-list i {
-			grid-column: 2;
-			grid-row: 1 / span 2;
+		.home-kicker span {
+			margin-inline: 0.3rem;
+		}
+
+		.home-actions {
+			align-items: stretch;
+			width: 100%;
+		}
+
+		.home-actions .btn {
+			width: 100%;
+		}
+
+		.work-list a {
+			grid-template-columns: 2rem minmax(0, 1fr) auto;
+			gap: 0.75rem;
 		}
 	}
 </style>
